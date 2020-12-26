@@ -29,7 +29,12 @@ EndEvent
 Event OnUpdate()
 	int i = 0
 	While (i < ListSize)
-		LowStaminaList[i].PopTo(LowStaminaList[i], LowStaminaMaxMagnitude[i]-(playerRef.GetActorValuePercentage("Stamina")*(1/LowStaminaPercentage[i])))
+		float playerStamina = playerRef.GetActorValuePercentage("Stamina")
+		If (playerStamina < 0)
+			playerStamina = 0
+		EndIf
+
+		LowStaminaList[i].PopTo(LowStaminaList[i], LowStaminaMaxMagnitude[i]-(playerStamina*(1/LowStaminaPercentage[i])))
 		i += 1
 	EndWhile
     RegisterForSingleUpdate(1)

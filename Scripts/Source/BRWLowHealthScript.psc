@@ -29,7 +29,12 @@ EndEvent
 Event OnUpdate()
 	int i = 0
 	While (i < ListSize)
-		LowHealthList[i].PopTo(LowHealthList[i], LowHealthMaxMagnitude[i]-(playerRef.GetActorValuePercentage("Health")*(1/LowHealthPercentage[i])))
+		float playerHealth = playerRef.GetActorValuePercentage("Health")
+		If (playerHealth < 0)
+			playerHealth = 0
+		EndIf
+
+		LowHealthList[i].PopTo(LowHealthList[i], LowHealthMaxMagnitude[i]-(playerHealth*(1/LowHealthPercentage[i])))
 		i += 1
 	EndWhile
     RegisterForSingleUpdate(1)

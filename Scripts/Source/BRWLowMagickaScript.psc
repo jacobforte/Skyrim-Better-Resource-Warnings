@@ -29,7 +29,12 @@ EndEvent
 Event OnUpdate()
 	int i = 0
 	While (i < ListSize)
-		LowMagickaList[i].PopTo(LowMagickaList[i], LowMagickaMaxMagnitude[i]-(playerRef.GetActorValuePercentage("Magicka")*(1/LowMagickaPercentage[i])))
+		float playerMagicka = playerRef.GetActorValuePercentage("Magicka")
+		If (playerMagicka < 0)
+			playerMagicka = 0
+		EndIf
+
+		LowMagickaList[i].PopTo(LowMagickaList[i], LowMagickaMaxMagnitude[i]-(playerMagicka*(1/LowMagickaPercentage[i])))
 		i += 1
 	EndWhile
     RegisterForSingleUpdate(1)
